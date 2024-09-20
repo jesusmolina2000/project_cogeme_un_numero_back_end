@@ -10,6 +10,9 @@ import { ChoosenNumber } from './models/choosen-number.model';
 import { RaffleModule } from './raffle/raffle.module';
 import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
+import { RaffleController } from './raffle/raffle.controller';
+import { RaffleService } from './raffle/raffle.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -25,9 +28,10 @@ import { UserService } from './user/user.service';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([User, Raffle, RaffleDate, ChoosenNumber]),
-    RaffleModule
+    UserModule,
+    RaffleModule,
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
