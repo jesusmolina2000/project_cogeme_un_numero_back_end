@@ -23,12 +23,12 @@ export class RaffleController {
         return await this.raffleService.findOne(id);
     }
 
-    @Patch('id')
+    @Patch(':id')
     async update(@Param('id') id: number, @Body() updateRaffleDto: UpdateRaffleDto): Promise<Raffle>{
         return await this.raffleService.update(id, updateRaffleDto);
     }
 
-    @Delete('id')
+    @Delete(':id')
     async delete(@Param('id') id: number){
         await this.raffleService.delete(id)
         return { message: 'User deleted successfully' };
