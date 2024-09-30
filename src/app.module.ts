@@ -8,11 +8,9 @@ import { Raffle } from './models/raffle.model';
 import { RaffleDate } from './models/raffle-date.model';
 import { ChoosenNumber } from './models/choosen-number.model';
 import { RaffleModule } from './raffle/raffle.module';
-import { UserController } from './user/user.controller';
-import { UserService } from './user/user.service';
-import { RaffleController } from './raffle/raffle.controller';
-import { RaffleService } from './raffle/raffle.service';
 import { UserModule } from './user/user.module';
+import { RaffleDateModule } from './raffle-date/raffle-date.module';
+import { ChoosenNumberModule } from './choosen-number/choosen-number.module';
 
 @Module({
   imports: [
@@ -30,6 +28,8 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forFeature([User, Raffle, RaffleDate, ChoosenNumber]),
     UserModule,
     RaffleModule,
+    RaffleDateModule,
+    ChoosenNumberModule,
   ],
   controllers: [AppController],
   providers: [AppService],

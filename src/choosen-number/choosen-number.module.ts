@@ -10,4 +10,4 @@ import { ChoosenNumberService } from './choosen-number.service';
   providers: [ChoosenNumberService],
   controllers: [ChoosenNumberController],
 })
-export class ChosenNumberModule {}
+export class ChoosenNumberModule {}
