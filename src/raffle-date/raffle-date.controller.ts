@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { RaffleDateService } from './raffle-date.service';
 import { CreateRaffleDateDto } from './dto/create-raffle-date.dto';
 import { UpdateRaffleDateDto } from './dto/update-raffle-date.dto';
+import { RaffleDate } from 'src/models/raffle-date.model';
 
 @Controller('raffle-date')
 export class RaffleDateController {
@@ -19,7 +20,7 @@ export class RaffleDateController {
      * @returns usuario creado.
      */
     @Post()
-    async create(@Body() createRaffleDateDto: CreateRaffleDateDto){
+    async create(@Body() createRaffleDateDto: CreateRaffleDateDto): Promise<RaffleDate>{
         return await this.raffleDateService.create(createRaffleDateDto);
     }
 
@@ -28,7 +29,7 @@ export class RaffleDateController {
      * @returns lista de fechas de rifas.
      */
     @Get()
-    async findAll(){
+    async findAll(): Promise<RaffleDate[]>{
         return await this.raffleDateService.findAll();
     }
 
@@ -38,7 +39,7 @@ export class RaffleDateController {
      * @returns la fecha si es encontrada.
      */
     @Get(':id')
-    async findOne(@Param('id') id: number){
+    async findOne(@Param('id') id: number): Promise<RaffleDate>{
         return await this.raffleDateService.findOne(id);
     }
 
@@ -49,7 +50,7 @@ export class RaffleDateController {
      * @returns la rifa con la informacion actualizada.
      */
     @Patch(':id')
-    async update(@Param('id') id: number, @Body() updateRaffleDateDto:UpdateRaffleDateDto){
+    async update(@Param('id') id: number, @Body() updateRaffleDateDto:UpdateRaffleDateDto): Promise<RaffleDate>{
         return await this.raffleDateService.update(id, updateRaffleDateDto);
     }
 

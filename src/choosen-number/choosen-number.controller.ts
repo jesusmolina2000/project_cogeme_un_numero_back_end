@@ -59,7 +59,8 @@ export class ChoosenNumberController {
      * @returns mensaje que ha sido eliminado.
      */
     @Delete(':id')
-    async delete(@Param('id') id: number): Promise<void> {
-        return this.choosenNumberService.delete(id);
+    async delete(@Param('id') id: number){
+        await this.choosenNumberService.delete(id);
+        return { message: 'User deleted successfully' };
     }
 }
