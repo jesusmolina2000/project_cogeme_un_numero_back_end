@@ -17,7 +17,7 @@ export class UserController {
     /**
      * ruta POST para crear un usuario.
      * @param createUserDto 
-     * @returns 
+     * @returns usuario creado.
      */
     @Post()
     async create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -26,7 +26,7 @@ export class UserController {
 
     /**
      * ruta GET para listar todos los usuarios.
-     * @returns 
+     * @returns array de usuarios existentes.
      */
     @Get()
     async findAll(): Promise<User[]>{
@@ -36,7 +36,7 @@ export class UserController {
     /**
      * ruta GET para buscar un usuario por id.
      * @param id 
-     * @returns 
+     * @returns usuario existente por id.
      */
     @Get(':id')
     async findOne(@Param('id') id: number) {
@@ -47,7 +47,7 @@ export class UserController {
      * ruta PATCH para actualizar la informacion de un usuario.
      * @param id 
      * @param updateUserDto 
-     * @returns 
+     * @returns informacion del usuario actualizado.
      */
     @Patch(':id')
     async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
@@ -57,7 +57,7 @@ export class UserController {
     /**
      * ruta DELETE para eliminar usuarios, no usar solo si es necesario.
      * @param id 
-     * @returns 
+     * @returns mensaje de eliminacion.
      */
     @Delete(':id')
     async delete(@Param('id') id: number) {

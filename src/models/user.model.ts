@@ -12,6 +12,9 @@ export class User {
   @Column({ type: 'varchar', length: 255, unique: true })
   correoElectronico: string;
 
+  @Column({ type: 'varchar', length: 255 })
+  contraseña: string;
+
   @Column({ type: 'varchar', length: 20 })
   telefono: string;
 

@@ -11,9 +11,11 @@ import { RaffleModule } from './raffle/raffle.module';
 import { UserModule } from './user/user.module';
 import { RaffleDateModule } from './raffle-date/raffle-date.module';
 import { ChoosenNumberModule } from './choosen-number/choosen-number.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    //recordatorio: usar variables de entorno
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -30,6 +32,7 @@ import { ChoosenNumberModule } from './choosen-number/choosen-number.module';
     RaffleModule,
     RaffleDateModule,
     ChoosenNumberModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
