@@ -12,6 +12,7 @@ import { UserModule } from './user/user.module';
 import { RaffleDateModule } from './raffle-date/raffle-date.module';
 import { ChoosenNumberModule } from './choosen-number/choosen-number.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtGuard } from './auth/jwt.guard';
 
 @Module({
   imports: [
@@ -35,6 +36,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtGuard],
 })
 export class AppModule {}

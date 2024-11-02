@@ -49,6 +49,7 @@ export class ChoosenNumberController {
      * @returns numero escogido actualizado
      */
     @Patch(':id')
+    //@UseGuards(JwtGuard)
     async update(@Param('id') id: number, @Body() updateChoosenNumberDto: CreateChoosenNumberDto): Promise<ChoosenNumber> {
         return this.choosenNumberService.update(id, updateChoosenNumberDto);
     }
@@ -59,6 +60,7 @@ export class ChoosenNumberController {
      * @returns mensaje que ha sido eliminado.
      */
     @Delete(':id')
+    //@UseGuards(JwtGuard)
     async delete(@Param('id') id: number){
         await this.choosenNumberService.delete(id);
         return { message: 'User deleted successfully' };

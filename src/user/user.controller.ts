@@ -50,6 +50,7 @@ export class UserController {
      * @returns informacion del usuario actualizado.
      */
     @Patch(':id')
+    //@UseGuards(JwtGuard)
     async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
         return await this.userService.update(id, updateUserDto);
     }
@@ -60,6 +61,7 @@ export class UserController {
      * @returns mensaje de eliminacion.
      */
     @Delete(':id')
+    //@UseGuards(JwtGuard)
     async delete(@Param('id') id: number) {
         await this.userService.Delete(id)
         return { message: 'Usuario eliminado correctamente.' };

@@ -20,6 +20,7 @@ export class RaffleDateController {
      * @returns usuario creado.
      */
     @Post()
+    //@UseGuards(JwtGuard)
     async create(@Body() createRaffleDateDto: CreateRaffleDateDto): Promise<RaffleDate>{
         return await this.raffleDateService.create(createRaffleDateDto);
     }
@@ -50,6 +51,7 @@ export class RaffleDateController {
      * @returns la rifa con la informacion actualizada.
      */
     @Patch(':id')
+    //@UseGuards(JwtGuard)
     async update(@Param('id') id: number, @Body() updateRaffleDateDto:UpdateRaffleDateDto): Promise<RaffleDate>{
         return await this.raffleDateService.update(id, updateRaffleDateDto);
     }
@@ -60,6 +62,7 @@ export class RaffleDateController {
      * @returns mensaje que ha sido eliminada.
      */
     @Delete(':id')
+    //@UseGuards(JwtGuard)
     async delete(@Param('id')id: number){
         await this.raffleDateService.delte(id);
         return { message: 'Fecha de rifa eliminada correctamente.' };

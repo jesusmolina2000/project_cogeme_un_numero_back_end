@@ -4,10 +4,11 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from '../models/user.model';
 import { Raffle } from '../models/raffle.model';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Raffle])],
-  providers: [UserService],
+  providers: [UserService, JwtGuard],
   controllers: [UserController],
   exports: [UserService],
 })

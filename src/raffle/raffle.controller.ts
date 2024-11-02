@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { RaffleService } from './raffle.service';
 import { Raffle } from 'src/models/raffle.model';
 import { CreateRaffleDto } from './dto/create-raffle.dto';
 import { UpdateRaffleDto } from './dto/update-raffle.dto';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
+//@UseGuards(JwtGuard)
 @Controller('raffle')
 export class RaffleController {
 
