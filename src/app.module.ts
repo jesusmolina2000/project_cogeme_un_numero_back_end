@@ -22,7 +22,7 @@ import { JwtGuard } from './auth/jwt.guard';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: '123',
       database: 'cogeme-un-numero',
       entities: [join(__dirname, '**', '*.model.{js,ts}')],
       autoLoadEntities: true,

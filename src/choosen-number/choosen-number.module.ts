@@ -4,11 +4,11 @@ import { ChoosenNumberController } from './choosen-number.controller';
 import { ChoosenNumber } from '../models/choosen-number.model';
 import { Raffle } from '../models/raffle.model';
 import { ChoosenNumberService } from './choosen-number.service';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ChoosenNumber, Raffle])],
-  providers: [ChoosenNumberService, JwtGuard],
+  imports: [TypeOrmModule.forFeature([ChoosenNumber, Raffle]), AuthModule],
+  providers: [ChoosenNumberService,],
   controllers: [ChoosenNumberController],
 })
 export class ChoosenNumberModule {}

@@ -23,7 +23,7 @@ export class JwtGuard implements CanActivate {
       throw new UnauthorizedException('Token no propoercionado');
     }
 
-    const token = authHeader.split('')[1];//extrae el token del header de la peticion  
+    const token = authHeader.split(' ')[1];//extrae el token del header de la peticion  
 
     try{
       const payload = this.jwtService.verify(token); // vrefica el token 

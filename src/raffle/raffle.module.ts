@@ -4,10 +4,11 @@ import { RaffleService } from './raffle.service';
 import { RaffleController } from './raffle.controller';
 import { Raffle } from '../models/raffle.model';
 import { User } from '../models/user.model';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from '../auth/jwt.guard';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Raffle, User])],
+  imports: [TypeOrmModule.forFeature([Raffle, User]), AuthModule],
   providers: [RaffleService, JwtGuard],
   controllers: [RaffleController],
 })
