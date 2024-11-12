@@ -37,7 +37,9 @@ export class UserService {
         user.contraseña= await bcrypt.hash(user.contraseña, salt);
 
         try{
-            return await this.userRepository.save(user);
+            await this.userRepository.save(user);
+            delete user.contraseña;
+            return user;
         }catch(error){
             throw new error ('Error al crear el usuario ' + error.message);
         }
@@ -49,6 +51,7 @@ export class UserService {
      */
     async findAll(): Promise<User[]> {
         const users = await this.userRepository.find();
+        users.forEach(user => delete user.contraseña);
         return users;
     }
 
@@ -75,7 +78,11 @@ export class UserService {
      * @returns informacion del usuario 
      */
     async findByEmail(correoElectronico: string): Promise<User | undefined> {
-        return await this.userRepository.findOne({ where: { correoElectronico } });
+        try{
+            return await this.userRepository.findOne({ where: { correoElectronico } });
+        }catch(error){
+            throw new error ('no se pudo encontrar usuario con este email ' + error.message);
+        }
       }
     
     
@@ -86,8 +93,12 @@ export class UserService {
        * @returns usuario actualizado
        */
     async update(id: number, updateUserDto:UpdateUserDto): Promise<User>{
-        await this.userRepository.update(id, updateUserDto);
-        return await this.findOne(id);
+        try{
+            await this.userRepository.update(id, updateUserDto);
+            return await this.findOne(id);
+        }catch(error){
+            throw new error ('no se pudo actualizar la informacion del usuario' + error.message);
+        }
     }
 
     /**
