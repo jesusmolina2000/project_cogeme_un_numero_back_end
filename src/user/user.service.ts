@@ -27,10 +27,20 @@ export class UserService {
      * @returns usuario creado guardado en la base de datos
      */
     async create(CreateUserDto: CreateUserDto): Promise<User>{
+    //busca si el correo ya esta registrado
+    const existingUser = await this.findByEmail(CreateUserDto.correoElectronico);
+    if (existingUser) {
+        throw new Error('Este correo electrónico ya está registrado.');
+    }
         const user= this.userRepository.create(CreateUserDto);
         const salt = await bcrypt.genSalt();
-        user.contraseña= await bcrypt.hash(user.contraseña, salt)
-        return await this.userRepository.save(user);
+        user.contraseña= await bcrypt.hash(user.contraseña, salt);
+
+        try{
+            return await this.userRepository.save(user);
+        }catch(error){
+            throw new error ('Error al crear el usuario ' + error.message);
+        }
     }
 
     /**
@@ -48,7 +58,15 @@ export class UserService {
      * @returns usuario con un array con sus rifas
      */
     async findOne(id: number): Promise<User>{
-        return await this.userRepository.findOne({where: { id }, relations: ['raffles']})
+        const user = await this.userRepository.findOne({where: { id }, relations: ['rifas']});
+        if(user){
+            delete user.contraseña;
+        }
+        try{
+            return user;
+        }catch(error){
+            throw new error ('no se puede encopntrar usuario  ' + error.message);
+        }
     }
 
     /**
