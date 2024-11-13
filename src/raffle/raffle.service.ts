@@ -23,9 +23,13 @@ export class RaffleService {
      * @returns creacion de una rifa asociada a un usuario.
      */
     async create(createRaffleDto: CreateRaffleDto, userId: number): Promise<Raffle> {
+        try{
         const user = await this.userRepository.findOne({where: {id: userId }});
         const raffle = this.raffleRepository.create({...createRaffleDto, usuario:user});
         return await this.raffleRepository.save(raffle) 
+        }catch(error){
+            throw new error ('no se pudo crear la rifa ' + error.message);
+        }
     }
 
     /**
@@ -33,7 +37,15 @@ export class RaffleService {
      * @returns array de rifas creadas.
      */
     async findAll(): Promise<Raffle[]>{
-        return await this.raffleRepository.find();
+        const raffles = await this.raffleRepository.find({relations: ['usuario']});
+        raffles.forEach(raffle => {
+            if (raffle.usuario) {
+                const { contraseña, ...usuarioSinContraseña } = raffle.usuario; // excluye la contraseña
+                raffle.usuario = usuarioSinContraseña as User; // casting del ojetosin la contraseña
+            }
+        });
+
+        return raffles;
     }
 
     /**
@@ -42,7 +54,12 @@ export class RaffleService {
      * @returns informacion de la rifa. 
      */
     async findOne(id: number): Promise<Raffle>{
-        return await this.raffleRepository.findOne({where: { id }, relations:['numerosEscogidos']});
+        const raffle = await this.raffleRepository.findOne({where: { id }, relations:['numerosEscogidos', 'usuario']});
+        if(raffle.usuario){
+            const { contraseña, ...usuarioSinContraseña } = raffle.usuario; // excluye la contraseña
+            raffle.usuario = usuarioSinContraseña as User; // casting del ojetosin la contraseña
+        }
+        return raffle;
     }
 
     /**
@@ -52,8 +69,12 @@ export class RaffleService {
      * @returns informacion de la rifa actualizada.
      */
     async update(id: number, updateRaffleDto: UpdateRaffleDto): Promise<Raffle>{
+        try{
         await this.raffleRepository.update(id, updateRaffleDto);
         return await this.findOne(id);
+        }catch(error){
+            throw new error('no se pudo actualizar la rifa ' + error.message);
+        }
     }
 
     /**
