@@ -32,6 +32,7 @@ export class AuthService {
    */
   async login(user: any) {
     const payload = { correoElectronico: user.correoElectronico, sub: user.id }; // Carga útil del JWT
+    console.log('payload jwt', payload);
     return {
       access_token: this.jwtService.sign(payload), // Genera el token usando el payload
     };
