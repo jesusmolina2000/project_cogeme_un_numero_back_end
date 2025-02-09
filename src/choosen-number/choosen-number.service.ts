@@ -4,6 +4,7 @@ import { ChoosenNumber } from '../models/choosen-number.model';
 import { Repository } from 'typeorm';
 import { CreateChoosenNumberDto } from './dto/create-choosen-number.dto';
 import { updateChoosenNumberDto } from './dto/update-choosen-number.dto';
+import { Raffle } from '../models/raffle.model';
 
 @Injectable()
 export class ChoosenNumberService {
@@ -14,7 +15,9 @@ export class ChoosenNumberService {
      */
     constructor (
         @InjectRepository(ChoosenNumber)
-        private choosenNumberRepository: Repository<ChoosenNumber>
+        private choosenNumberRepository: Repository<ChoosenNumber>,
+        @InjectRepository(Raffle)
+        private raffleRepository: Repository<Raffle>
     ){}
 
     /**
@@ -23,7 +26,12 @@ export class ChoosenNumberService {
      * @returns informacion de un numero escogido.
      */
     async create(createChoosenNumberDto: CreateChoosenNumberDto): Promise<ChoosenNumber>{
-        const choosenNumber = this.choosenNumberRepository.create(createChoosenNumberDto);
+        const {numero, nombre, numeroDeContacto, raffleId, estado} = createChoosenNumberDto;
+        const raffle = await this.raffleRepository.findOne({ where: { id: raffleId } });
+        if(!raffle){
+            throw new Error('Raffle not found');
+        }
+        const choosenNumber = this.choosenNumberRepository.create({ numero, nombre, numeroDeContacto, raffle, estado });
         return await this.choosenNumberRepository.save(choosenNumber);
     }
 

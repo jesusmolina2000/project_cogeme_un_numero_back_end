@@ -14,6 +14,9 @@ export class Raffle {
   @Column({ type: 'varchar', length: 255 })
   premio: string;
 
+  @Column({ type: 'varchar', length: 255 })
+  loteria: string;
+
   @Column({ type: 'date' })
   fechaCreacion: Date;
 
