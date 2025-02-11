@@ -3,9 +3,9 @@ import { RaffleService } from './raffle.service';
 import { Raffle } from 'src/models/raffle.model';
 import { CreateRaffleDto } from './dto/create-raffle.dto';
 import { UpdateRaffleDto } from './dto/update-raffle.dto';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from '../auth/jwt.guard';
 
-//@UseGuards(JwtGuard)
+@UseGuards(JwtGuard)
 @Controller('raffle')
 export class RaffleController {
 

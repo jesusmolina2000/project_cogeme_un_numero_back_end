@@ -62,7 +62,7 @@ export class UserController {
      * @returns mensaje de eliminacion.
      */
     @Delete(':id')
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     async delete(@Param('id') id: number) {
         await this.userService.Delete(id)
         return { message: 'Usuario eliminado correctamente.' };

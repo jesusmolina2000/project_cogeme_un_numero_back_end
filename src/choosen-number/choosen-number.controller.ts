@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ChoosenNumberService } from './choosen-number.service';
 import { CreateChoosenNumberDto } from './dto/create-choosen-number.dto';
 import { ChoosenNumber } from 'src/models/choosen-number.model';
+import { JwtGuard } from '../auth/jwt.guard';
 
 @Controller('choosen-number')
 export class ChoosenNumberController {
@@ -49,7 +50,7 @@ export class ChoosenNumberController {
      * @returns numero escogido actualizado
      */
     @Patch(':id')
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     async update(@Param('id') id: number, @Body() updateChoosenNumberDto: CreateChoosenNumberDto): Promise<ChoosenNumber> {
         return this.choosenNumberService.update(id, updateChoosenNumberDto);
     }
@@ -60,7 +61,7 @@ export class ChoosenNumberController {
      * @returns mensaje que ha sido eliminado.
      */
     @Delete(':id')
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     async delete(@Param('id') id: number){
         await this.choosenNumberService.delete(id);
         return { message: 'User deleted successfully' };
