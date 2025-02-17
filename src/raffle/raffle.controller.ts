@@ -5,7 +5,7 @@ import { CreateRaffleDto } from './dto/create-raffle.dto';
 import { UpdateRaffleDto } from './dto/update-raffle.dto';
 import { JwtGuard } from '../auth/jwt.guard';
 
-@UseGuards(JwtGuard)
+//@UseGuards(JwtGuard)
 @Controller('raffle')
 export class RaffleController {
 
@@ -23,6 +23,7 @@ export class RaffleController {
      * @returns rifa creada.
      */
     @Post()
+    @UseGuards(JwtGuard)
     async create(@Body() createRaffleDto: CreateRaffleDto, @Req() req): Promise<Raffle>{
         const userID = req.user?.id || 1; 
         return await this.raffleService.create(createRaffleDto, userID);
@@ -54,6 +55,7 @@ export class RaffleController {
      * @returns rifa actualizada.
      */
     @Patch(':id')
+    @UseGuards(JwtGuard)
     async update(@Param('id') id: number, @Body() updateRaffleDto: UpdateRaffleDto): Promise<Raffle>{
         return await this.raffleService.update(id, updateRaffleDto);
     }
@@ -64,6 +66,7 @@ export class RaffleController {
      * @returns mensaje que ha sido eliminado.
      */
     @Delete(':id')
+    @UseGuards(JwtGuard)
     async delete(@Param('id') id: number){
         await this.raffleService.delete(id)
         return { message: 'User deleted successfully' };
