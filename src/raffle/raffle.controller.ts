@@ -34,6 +34,7 @@ export class RaffleController {
      * @returns rifas creadas.
      */
     @Get()
+    @UseGuards(JwtGuard)
     async findAll(): Promise<Raffle[]>{
         return this.raffleService.findAll();
     }
@@ -46,6 +47,17 @@ export class RaffleController {
     @Get(':id')
     async findOne(@Param('id') id: number): Promise<Raffle>{
         return await this.raffleService.findOne(id);
+    }
+
+    /**
+     * ruta GET para buscar rifas por id de usuario.
+     * @param userId 
+     * @returns array de rifas asociadas al usuario.
+     */
+    @Get('user/:userId')
+    @UseGuards(JwtGuard)
+    async findByUserId(@Param('userId') userId: number): Promise<Raffle[]> {
+        return await this.raffleService.findByUserId(userId);
     }
 
     /**

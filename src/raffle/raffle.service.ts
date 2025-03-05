@@ -63,6 +63,22 @@ export class RaffleService {
     }
 
     /**
+     * metodo encontrar rifas por id de usuario
+     * @param userId 
+     * @returns array de rifas asociadas al usuario
+     */
+    async findByUserId(userId: number): Promise<Raffle[]> {
+        const raffles = await this.raffleRepository.find({ where: { usuario: { id: userId } }, relations: ['usuario'] });
+        raffles.forEach(raffle => {
+            if (raffle.usuario) {
+                raffle.usuario = { id: raffle.usuario.id } as any; // Dejar solo el ID del usuario
+            }
+        });
+        return raffles;
+    }
+
+
+    /**
      * metodo actualizar una rifa por id
      * @param id 
      * @param updateRaffleDto 
