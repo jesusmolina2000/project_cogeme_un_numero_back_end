@@ -53,6 +53,15 @@ export class ChoosenNumberService {
     }
 
     /**
+     * metodo encontrar números escogidos por id de rifa
+     * @param raffleId 
+     * @returns array de números escogidos asociados a la rifa
+     */
+    async findByRaffleId(raffleId: number): Promise<ChoosenNumber[]> {
+        return await this.choosenNumberRepository.find({ where: { raffle: { id: raffleId } }, relations: ['raffle'] });
+    }
+
+    /**
      * metodo actualizar numero escogido por id.
      * @param id 
      * @param updateChoosenNumberDto 

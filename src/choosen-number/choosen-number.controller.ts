@@ -44,6 +44,17 @@ export class ChoosenNumberController {
     }
 
     /**
+     * ruta GET para buscar números escogidos por id de rifa.
+     * @param raffleId 
+     * @returns array de números escogidos asociados a la rifa.
+     */
+    @Get('raffle/:raffleId')
+    @UseGuards(JwtGuard)
+    async findByRaffleId(@Param('raffleId') raffleId: number): Promise<ChoosenNumber[]> {
+        return await this.choosenNumberService.findByRaffleId(raffleId);
+    }
+
+    /**
      * ruta PATCH para actualizar un numero escogido por id.
      * @param id 
      * @param updateChoosenNumberDto 
