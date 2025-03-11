@@ -25,8 +25,11 @@ export class RaffleController {
     @Post()
     @UseGuards(JwtGuard)
     async create(@Body() createRaffleDto: CreateRaffleDto, @Req() req): Promise<Raffle>{
-        const userID = req.user?.id || 1; 
-        return await this.raffleService.create(createRaffleDto, userID);
+        if (!req.user || !req.user.id) {
+            throw new Error('User not authenticated');
+          }
+          const userID = req.user.id; // Asegúrate de que req.user siempre esté definido
+          return await this.raffleService.create(createRaffleDto, userID);
     }
 
     /**
@@ -55,7 +58,7 @@ export class RaffleController {
      * @returns array de rifas asociadas al usuario.
      */
     @Get('user/:userId')
-    @UseGuards(JwtGuard)
+    //@UseGuards(JwtGuard)
     async findByUserId(@Param('userId') userId: number): Promise<Raffle[]> {
         return await this.raffleService.findByUserId(userId);
     }
