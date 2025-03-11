@@ -23,13 +23,12 @@ export class RaffleService {
      * @returns creacion de una rifa asociada a un usuario.
      */
     async create(createRaffleDto: CreateRaffleDto, userId: number): Promise<Raffle> {
-        try{
-        const user = await this.userRepository.findOne({where: {id: userId }});
-        const raffle = this.raffleRepository.create({...createRaffleDto, usuario:user});
-        return await this.raffleRepository.save(raffle) 
-        }catch(error){
-            throw new error ('no se pudo crear la rifa ' + error.message);
-        }
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    const raffle = this.raffleRepository.create({ ...createRaffleDto, usuario: user });
+    return await this.raffleRepository.save(raffle);
     }
 
     /**
