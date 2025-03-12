@@ -20,7 +20,7 @@ export class JwtGuard implements CanActivate {
     const authHeader = request.headers.authorization; 
 
     console.log('Authorization Header:', authHeader);
-    if(!authHeader || !authHeader.startsWith('bearer')){ // revisa que llegue un token
+    if(!authHeader || !authHeader.startsWith('Bearer ')){ // revisa que llegue un token
       throw new UnauthorizedException('Token no propoercionado');
     }
 
@@ -30,6 +30,7 @@ export class JwtGuard implements CanActivate {
     try{
       const payload = this.jwtService.verify(token); // vrefica el token 
       (request as any).user=payload; // se hace conversion de tipo request para poder usar el tipo user y luego asocia  el verificado para usarlo despues
+      console.log('payload verificado');
       return true; // token valido y permite acceso
     }catch(error){
       console.error('error al verificar token', error);

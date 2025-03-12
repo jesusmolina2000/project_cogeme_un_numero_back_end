@@ -25,10 +25,11 @@ export class RaffleController {
     @Post()
     @UseGuards(JwtGuard)
     async create(@Body() createRaffleDto: CreateRaffleDto, @Req() req): Promise<Raffle>{
-        if (!req.user || !req.user.id) {
+        console.log('req.user', req.user);
+        if (!req.user || !req.user.sub){
             throw new Error('User not authenticated');
-          }
-          const userID = req.user.id; // Asegúrate de que req.user siempre esté definido
+        }
+          const userID = req.user.sub; // Asegúrate de que req.user siempre esté definido
           return await this.raffleService.create(createRaffleDto, userID);
     }
 
