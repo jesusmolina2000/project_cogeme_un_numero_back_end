@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  //configuracion global de paquetes de validacion
+  app.useGlobalPipes(new ValidationPipe());
 
    // Configuración cors, añadir origen de url de dominio mas adelante
    app.enableCors({

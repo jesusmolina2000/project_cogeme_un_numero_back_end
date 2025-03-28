@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import { ConfigService } from '@nestjs/config';
@@ -30,13 +30,42 @@ export class AuthService {
   /**
    * metodo para generar el JWT cuando el usuario inicia sesión
    * @param user usuario autenticado
-   * @returns objeto con el token de acceso (JWT).
+   * @returns objeto con los tokens de acceso (JWT).
    */
   async login(user: any) {
     const payload = { correoElectronico: user.correoElectronico, sub: user.id }; // Carga útil del JWT
     console.log('payload jwt', payload);
+
+    // genera el token de acceso y el token de actualización
+    const accessToken = this.jwtService.sign(payload, {
+        expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION') || '15m',
+    });
+
+    const refreshToken = this.jwtService.sign(payload, {
+        expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION') || '7d',
+    });
+
     return {
-      access_token: this.jwtService.sign(payload), // Genera el token usando el payload
+        access_token: accessToken,
+        refresh_token: refreshToken,
     };
+  }
+
+
+  async refreshAccessToken(refreshToken: string): Promise<string> {
+    try {
+      // verifica el refresh token
+      const payload = this.jwtService.verify(refreshToken);
+  
+      // genera nuevo accesstoken 
+      const newAccessToken = this.jwtService.sign(
+        { sub: payload.sub, correoElectronico: payload.correoElectronico },
+        { expiresIn: '15m' }, // token válido por 15 minutos
+      );
+  
+      return newAccessToken;
+    } catch (error) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
   }
 }

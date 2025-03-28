@@ -59,7 +59,7 @@ export class RaffleController {
      * @returns array de rifas asociadas al usuario.
      */
     @Get('user/:userId')
-    //@UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
     async findByUserId(@Param('userId') userId: number): Promise<Raffle[]> {
         return await this.raffleService.findByUserId(userId);
     }
