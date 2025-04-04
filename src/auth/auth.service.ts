@@ -38,12 +38,10 @@ export class AuthService {
 
     // genera el token de acceso y el token de actualización
     const accessToken = this.jwtService.sign(payload, {
-        expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION') || '15m',
-    });
+        expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION')});
 
     const refreshToken = this.jwtService.sign(payload, {
-        expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION') || '7d',
-    });
+        expiresIn: this.configService.get<string>('JWT_REFRESH_TOKEN_EXPIRATION')});
 
     return {
         access_token: accessToken,
@@ -56,13 +54,9 @@ export class AuthService {
     try {
       // verifica el refresh token
       const payload = this.jwtService.verify(refreshToken);
-  
       // genera nuevo accesstoken 
-      const newAccessToken = this.jwtService.sign(
-        { sub: payload.sub, correoElectronico: payload.correoElectronico },
-        { expiresIn: '15m' }, // token válido por 15 minutos
-      );
-  
+      const newAccessToken = this.jwtService.sign({sub: payload.sub, correoElectronico: payload.correoElectronico},
+        {expiresIn: this.configService.get<string>('JWT_ACCESS_TOKEN_EXPIRATION')});
       return newAccessToken;
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
