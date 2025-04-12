@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    image: backend-app
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: cogeme-un-numero # Nombre del contenedor existente
+      DB_PORT: 3306
+      DB_USERNAME: root
+      DB_PASSWORD: 123
+      DB_NAME: cogeme-un-numero
+      JWT_ACCESS_SECRET: miClaveJWTSecreta123
+      JWT_ACCESS_TOKEN_EXPIRATION: 15m
+      JWT_REFRESH_SECRET: miClaveJWTSecreta123
+      JWT_REFRESH_TOKEN_EXPIRATION: 7d
+      BCRYPT_SALT_ROUNDS: 10
+      NODE_ENV: development
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
