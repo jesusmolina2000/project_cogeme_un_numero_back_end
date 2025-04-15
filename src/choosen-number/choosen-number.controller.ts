@@ -49,7 +49,6 @@ export class ChoosenNumberController {
      * @returns array de números escogidos asociados a la rifa.
      */
     @Get('raffle/:raffleId')
-    @UseGuards(JwtGuard)
     async findByRaffleId(@Param('raffleId') raffleId: number): Promise<ChoosenNumber[]> {
         return await this.choosenNumberService.findByRaffleId(raffleId);
     }
