@@ -17,7 +17,7 @@ export class Raffle {
   @Column({ type: 'varchar', length: 255 })
   loteria: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   fechaCreacion: Date;
 
   @Column({ type: 'date' })
@@ -25,6 +25,9 @@ export class Raffle {
 
   @Column({ type: 'int' })
   numeroMaximo: number;
+
+  @Column({ type: 'int' })
+  precioNumero: number;
 
   @OneToMany(() => RaffleDate, raffleDate => raffleDate.raffle)
   fechas: RaffleDate[];

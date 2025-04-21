@@ -28,7 +28,14 @@ export class RaffleService {
       throw new NotFoundException('User not found');
     }
     const raffle = this.raffleRepository.create({ ...createRaffleDto, usuario: user });
-    return await this.raffleRepository.save(raffle);
+    const savedRaffle = await this.raffleRepository.save(raffle);
+
+    if (savedRaffle.usuario) {
+        const { contraseña, ...usuarioSinContraseña } = savedRaffle.usuario;
+        savedRaffle.usuario = usuarioSinContraseña as User; //rufa con la info del usuario sin la contraseña
+    }
+
+    return savedRaffle;
     }
 
     /**
