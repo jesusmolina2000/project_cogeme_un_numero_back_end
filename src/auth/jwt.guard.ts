@@ -21,7 +21,7 @@ export class JwtGuard implements CanActivate {
 
     console.log('Authorization Header:', authHeader);
     if(!authHeader || !authHeader.startsWith('Bearer ')){ // revisa que llegue un token
-      throw new UnauthorizedException('Token no propoercionado');
+      throw new UnauthorizedException('Token no proporcionado');
     }
 
     const token = authHeader.split(' ')[1];//extrae el token del header de la peticion 
